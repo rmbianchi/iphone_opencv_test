@@ -14,6 +14,10 @@ if [ "$1" = "-h" -o "$1" = "--help" -o -z "$1" ]; then
 	echo "    IPHONEOS_VERSION_MIN iOS deployment target"
 	echo "    CMAKE_OPTIONS        Additional CMake options"
 	echo "    CFLAGS               Additional compiler flags"
+    echo
+    echo "PLEASE NOTICE: you should have the Xcode Command Line tools installed on your system. If not sure please check in 'Xcode-->Preferences-->Downloads'. "
+    echo
+    echo
 	exit
 fi
 
@@ -33,15 +37,22 @@ else
 fi
 
 if [ -z "$SDK_VERSION" ]; then
-	SDK_VERSION="5.0"
+	SDK_VERSION="5.1"
 fi
 
 if [ -z "$IPHONEOS_VERSION_MIN" ]; then
 	IPHONEOS_VERSION_MIN="3.0"
 fi
 
-DEVELOPER_ROOT="/Developer/Platforms/${TARGET_SDK_NAME}.platform/Developer"
+# new in Xcode 4.3
+# ls /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/
+#
+# OLD
+#DEVELOPER_ROOT="/Developer/Platforms/${TARGET_SDK_NAME}.platform/Developer"
+#SDK_ROOT="${DEVELOPER_ROOT}/SDKs/${TARGET_SDK_NAME}${SDK_VERSION}.sdk"
+DEVELOPER_ROOT="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer"
 SDK_ROOT="${DEVELOPER_ROOT}/SDKs/${TARGET_SDK_NAME}${SDK_VERSION}.sdk"
+
 
 if [ ! -d "$SDK_ROOT" ]; then
 	echo "iOS SDK Version ${SDK_VERSION} is not found, please select iOS version you have."
